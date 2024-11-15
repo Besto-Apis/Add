@@ -41,7 +41,24 @@ def encrypt_api(plain_text):
         return cipher_text.hex()
     except Exception as e:
         return f"Error in encrypt_api function: {str(e)}"
-
+        
+def Token():
+    api_url = "https://besto-get-access-token-uid.vercel.app/Token?Uid=3485092977&Pw=56AB38A686BD86A4C679B620C15C0B3BEA50D04A4F38D13932BC82D4D228AB16"
+    response_text = requests.get(api_url).text
+    access_token_match = re.search(r"Access Token : (\S+)", response_text)
+    access_id_match = re.search(r"Access Id : (\S+)", response_text)  
+    if access_token_match and access_id_match:
+        a1 = access_token_match.group(1)
+        a2 = access_id_match.group(1)
+        api2 = requests.get(f"https://besto-get-jwt-token.vercel.app/Token-Jwt?Token={a1}&Uid={a2}")
+        a3 = re.search(r"Token: (\S+)", api2.text)        
+        if a3:
+            return a3.group(1)
+        else:
+            print("لم يتم العثور على Token في الاستجابة.")
+    else:
+        print("لم يتم العثور على Access Token أو Access Id.")
+                
 def Add_Fr(id,Tok):
     url = 'https://clientbp.common.ggbluefox.com/RequestAddingFriend'
     headers = {
@@ -73,9 +90,9 @@ def Add_Fr(id,Tok):
 @app.route('/Add', methods=['GET'])
 def add_friend():
     id = request.args.get('Id')
-    Tok = request.args.get('Token')
     
     if id:
+        Tok = Token()
         response = Add_Fr(id,Tok)
         return jsonify({" - ResPonse > ": response})
     else:
