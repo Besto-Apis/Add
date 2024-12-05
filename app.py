@@ -66,7 +66,7 @@ def Add_Fr(id, Tok):
     url = 'https://clientbp.common.ggbluefox.com/RequestAddingFriend'
     headers = {
         'X-Unity-Version': '2018.4.11f1',
-        'ReleaseVersion': 'OB46',
+        'ReleaseVersion': 'OB47',
         'Content-Type': 'application/x-www-form-urlencoded',
         'X-GA': 'v1 1',
         'Authorization': f'Bearer {Tok}',
